@@ -1,0 +1,54 @@
+{% extends 'control_panel/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    input, textarea{
+        display: block;
+        border-radius: 4px;
+        background-color: #f0f0f0;
+        width: 100%;
+        padding: 10px 8px;
+        margin-bottom: 16px;
+        transition-duration: 0.5s;
+    }
+    select{
+        display: block;
+        border-radius: 4px;
+        background-color: #f1f1f1;
+        width: 100%;
+        padding: 10px 8px;
+        margin-bottom: 16px;
+    }
+    input:focus, textarea:focus{
+        background-color: #f8f8f8;
+    }
+    .errorlist{
+        color: #c82f2f;
+        list-style: none;
+        font-weight: 500;
+    }
+</style>
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="row card">
+            <div class="col-md-12 ">
+                <div class="card-header">
+                    <h1 class="title-3">Product</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" name="Submit" class="btn btn-lg btn-info btn-block">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{#<script>#}
+{#    document.getElementById("id_date_created").setAttribute("type", "datetime-local");#}
+{#</script>#}
+
+{% endblock %}

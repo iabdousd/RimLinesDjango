@@ -1,0 +1,124 @@
+{% extends 'control_panel/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    input, textarea{
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #f0f0f0;
+        padding: 10px 8px;
+        margin-bottom: 16px;
+        transition-duration: 0.5s;
+    }
+    select{
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #f1f1f1;
+        {#width: 100%;#}
+        padding: 10px 8px;
+        margin-bottom: 16px;
+    }
+    input:focus, textarea:focus{
+        background-color: #f8f8f8;
+    }
+    .errorlist{
+        color: #c82f2f;
+        list-style: none;
+        font-weight: 500;
+    }
+    label[for='id_category']{
+        padding-right: 12px;
+    }
+    label[for='id_search_name']{
+        display: block;
+    }
+    label[for='id_start_price']{
+        display: block;
+    }
+    #id_search_name{
+        width: 100%;
+    }
+    .au-btn--submit{
+        width: 15%;
+        color: white;
+        display: inline-block;
+        float: right;
+        height: 46px;
+    }
+    #id_category{
+        width: 405px;
+    }
+</style>
+<div class="main-content animsition">
+    <div class="section__content section__content--p30 row">
+        <div class="col-md-12 au-card au-card--no-shadow m-b-40">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="title-1 m-b-15">Products:</h2>
+                        <div class="table-data__tool">
+                            <form method="get" style="width: 100%">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        {{ filter.form }}
+                                        <button class="au-btn--submit" type="submit">
+                                            Apply Filter
+                                        </button>
+                                    </div>
+                                </div>
+{#                                <div class="rs-select2--light rs-select2--md">#}
+{#                                    <select class="js-select2" name="property">#}
+{#                                        <option selected="selected">All Properties</option>#}
+{#                                        <option value="">Option 1</option>#}
+{#                                        <option value="">Option 2</option>#}
+{#                                    </select>#}
+{#                                    <div class="dropDownSelect2"></div>#}
+{#                                </div>#}
+{#                                <div class="rs-select2--light rs-select2--sm">#}
+{#                                    <select class="js-select2" name="time">#}
+{#                                        <option selected="selected">Today</option>#}
+{#                                        <option value="">3 Days</option>#}
+{#                                        <option value="">1 Week</option>#}
+{#                                    </select>#}
+{#                                    <div class="dropDownSelect2"></div>#}
+{#                                </div>#}
+{#                                <button class="au-btn-filter">#}
+{#                                    <i class="zmdi zmdi-filter-list"></i>filters#}
+{#                                </button>#}
+                            </form>
+                        </div>
+                    <div class="table-responsive table--no-card m-b-40">
+                        <table class="table table-borderless table-striped table-earning">
+                            <thead>
+                                <tr>
+                                    <th>date</th>
+                                    <th>name</th>
+                                    <th>category</th>
+                                    <th class="text-right">description</th>
+                                    <th class="text-right">price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in products %}
+                                <tr onclick="window.location='{% url 'product' product.id %}';">
+                                    <td>{{ product.date_created }}</td>
+                                    <td>{{ product.name }}</td>
+                                    <td>{{ product.category }}</td>
+                                    <td class="text-right">{{ product.description }}</td>
+                                    <td class="text-right">{{ product.price }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    label_price = document.querySelector("label[for='id_start_price']").innerHTML = 'Price Between:';
+    label_price = document.querySelector("label[for='id_end_price']").innerHTML = '&nbsp;&nbsp; and &nbsp;&nbsp;';
+    label_price = document.querySelector("label[for='id_search_name']").innerHTML = 'Search by name:';
+</script>
+{% endblock %}

@@ -1,0 +1,232 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>RimLines</title>
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/icofont/icofont.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/venobox/venobox.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/owl.carousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+    <header id="header" class="fixed-top header-transparent">
+        <div class="container">
+            <div class="logo float-left">
+                <h1 class="text-light"><a href="index.html"><span>RimLines</span></a></h1>
+            </div>
+            <nav class="nav-menu float-right d-none d-lg-block">
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="/about">About Us</a></li>
+                    <li class="drop-down"><a href="">Services</a>
+                        <ul>
+                            <li><a href="#">OurSubscriptions</a></li>
+                            <li><a href="#">Online Payments</a></li>
+                            <li class="drop-down"><a href="#">Subscriptions</a>
+                                <ul>
+                                    <li><a href="#">Netflix</a></li>
+                                    <li><a href="#">Hulu</a></li>
+                                    <li><a href="#">HBO</a></li>
+                                    <li><a href="#">Amazon Prime</a></li>
+                                    <li><a href="#">Spotify</a></li>
+                                    <li><a href="#">Deezer</a></li>
+                                    <li><a href="#">Show more</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="">Contact Us</a></li>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.groups.all.0.name != 'customer' %}
+                            <li><a href="{% url 'dashboard' %}">Control Panel</a></li>
+                        {% endif %}
+                        <li><a href="{% url 'logout' %}">Log out</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Log in</a></li>
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
+<!--                    <li><a href="">Profile</a></li>-->
+<!--                    <li ><a href="">Control Panel</a></li>-->
+<!--                    <li><a href="">Logout</a></li>-->
+                </ul>
+            </nav><!-- .nav-menu -->
+
+        </div>
+    </header><!-- End Header -->
+<!--    <header id="header" class="fixed-top">-->
+<!--        <div class="container">-->
+
+<!--            <div class="logo float-left">-->
+<!--                <h1 class="text-light"><a href=""><span>RimLines</span></a></h1>-->
+<!--            </div>-->
+
+<!--            <nav class="nav-menu float-right d-none d-lg-block">-->
+<!--                <ul>-->
+<!--                    <li><a href="">Home</a></li>-->
+<!--                    <li><a href="/about">About Us</a></li>-->
+<!--                    <li><a href="/portfolio">Portfolio</a></li>-->
+<!--                    <li><a href="/team">Team</a></li>-->
+<!--                    <li><a href="/blog">Blog</a></li>-->
+<!--                    <li class="drop-down"><a href="">Services</a>-->
+<!--                        <ul>-->
+<!--                            <li><a href="#">Our Subscriptions</a></li>-->
+<!--                            <li><a href="#">Online Payments</a></li>-->
+<!--                            <li class="drop-down"><a href="#">Subscriptions</a>-->
+<!--                                <ul>-->
+<!--                                    <li class="active"><a href="#">Netflix</a></li>-->
+<!--                                    <li class="active"><a href="#">Hulu</a></li>-->
+<!--                                    <li class="active"><a href="#">HBO</a></li>-->
+<!--                                    <li class="active"><a href="#">Amazon Prime</a></li>-->
+<!--                                    <li class="active"><a href="#">Spotify</a></li>-->
+<!--                                    <li class="active"><a href="#">Deezer</a></li>-->
+<!--                                    <li class="active"><a href="#">Show more</a></li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                    <li><a href="">Contact Us</a></li>-->
+<!--                    <li><a href="">Log in</a></li>-->
+<!--                    <li><a href="">Register</a></li>-->
+<!--                        <li><a href="">Profile</a></li>-->
+<!--                        <li><a href="">Control Panel</a></li>-->
+<!--                        <li><a href="">Logout</a></li>-->
+<!--                </ul>-->
+<!--            </nav>&lt;!&ndash; .nav-menu &ndash;&gt;-->
+
+<!--        </div>-->
+<!--    </header>&lt;!&ndash; End Header &ndash;&gt;-->
+    <section id="hero-no-slider" class="d-flex justify-cntent-center align-items-center">
+        <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+            <div class="row justify-content-center">
+                <div class="col-xl-8">
+                    <h2>Welcome to RimLines</h2>
+                    <p>The First all Online Services Provider Company in Mauritania.</p>
+                    <a href="" class="btn-get-started ">Read More</a>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero No Slider Sectio -->
+    <main id="main">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+
+        <div class="footer-newsletter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4>Our Newsletter</h4>
+                        <p>Subscribe to get updated about all our new Services and Products!</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <form action="" method="post">
+                            <input type="email" name="email"><input type="submit" value="Subscribe">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                            Carrefour Zaitouna Cite Smart <br>
+                            Nouakchott Ouest, Tevragh Zeina<br>
+                            Mauritania <br><br>
+                            <strong>Phone:</strong> +222 48 04 24 44<br>
+                            <strong>Email:</strong> info@rimlines.com<br>
+                        </p>
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <h3>About RimLines</h3>
+                        <p>RimLines is The First Company providing all online services and needs in Mauritania.</p>
+                        <div class="social-links mt-3">
+                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><a href="{{ url_for('index' %}">RimLines</a></strong>. All Rights Reserved
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery.easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'vendor/venobox/venobox.min.js' %}"></script>
+    <script src="{% static 'vendor/waypoints/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'vendor/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'vendor/owl.carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendor/aos/aos.js' %}"></script>
+
+    <!-- Main JS File -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

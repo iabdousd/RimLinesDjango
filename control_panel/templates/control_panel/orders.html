@@ -1,0 +1,63 @@
+{% extends 'control_panel/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="title-1">
+                    orders
+                    <a href="{% url 'add_order' %}" class="au-btn au-btn-icon au-btn--blue float-right" style="font-size: 18px;"><i class="zmdi zmdi-plus"></i>New Order</a>
+                </h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive table--no-card m-b-40">
+                    <table class="table table-borderless table-striped table-earning">
+                        <thead>
+                        <tr>
+                            <th>date</th>
+                            <th>product</th>
+                            <th>customer</th>
+                            <th class="text-right">quantity</th>
+                            <th class="text-right">status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in orders %}
+                            <tr onclick="window.location='{% url 'order' order.id %}';">
+                                <td>{{ order.date_created }}</td>
+                                <td>{{ order.product.name }}</td>
+                                <td>{{ order.customer.name }}</td>
+                                <td class="text-right">{{ order.quantity }}</td>
+                                <td class="text-right">{{ order.status }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if orders.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ orders.previous_page_number }}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ orders.number }} of {{ orders.paginator.num_pages }}.
+                        </span>
+
+                        {% if orders.has_next %}
+                            <a href="?page={{ orders.next_page_number }}">next</a>
+                            <a href="?page={{ orders.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

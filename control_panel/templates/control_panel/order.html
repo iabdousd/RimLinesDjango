@@ -1,0 +1,120 @@
+{% extends 'control_panel/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="card">
+            <div class="card-header">
+                <div style="display: flex; align-items: center;">
+                    <h3 class="card-title">
+                        Order #{{ order.id }}
+                    </h3>
+                    {% if order.status.title == 'Pending' %}
+                        <button type="button" class="btn btn-danger m-l-10 m-b-10">{{ order.status }}</button>
+                    {% elif order.status.title == 'Delivered' %}
+                        <button type="button" class="btn btn-success m-l-10 m-b-10">{{ order.status }}</button>
+                    {% else %}
+                        <button type="button" class="btn btn-warning m-l-10 m-b-10">{{ order.status }}</button>
+                    {% endif %}
+                </div>
+                <p class="card-subtitle">{{ order.date_created }}</p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="title-3">
+                                    Transaction
+                                    {% if order.transaction.verified %}
+                                        <span type="button" class="description badge badge-success m-l-10 m-b-10">Verified</span>
+                                    {% else %}
+                                        <span type="button" class="description badge badge-danger m-l-10 m-b-10">Not Verified</span>
+                                    {% endif %}
+                                </h3>
+                                <p class="card-subtitle">
+                                    {{ order.transaction.date_created }}
+                                </p>
+                            </div>
+                            <div class="card-body">
+                                <label for="cardSerial">
+                                    Payment Method
+                                </label>
+                                <input id="cardSerial" class="form-control" type="text" placeholder="{{ order.transaction.credentials.method }}" readonly>
+                                <br>
+                                <label for="orderAmount">
+                                    Customer
+                                </label>
+                                <div class="input-group">
+                                        <input id="orderAmount" type="text" class="form-control" placeholder="{{ order.customer.phone }}" readonly>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">{{ order.customer.name }}</span>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="orderAmount">
+                                    Amount
+                                </label>
+                                <div class="input-group">
+                                        <input id="orderAmount" type="text" class="form-control" placeholder="{{ order.transaction.credentials.amount }}" readonly>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">MRU</span>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="cardSerial">
+                                    Sent From
+                                </label>
+                                <input id="cardSerial" class="form-control" type="text" placeholder="{{ order.transaction.credentials.from_destination }}" readonly>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="title-3">
+                                    {{ order.product.name }}
+                                </h3>
+                                {% for tag in order.product.tags.all %}
+                                    <span class="badge badge-secondary">{{ tag.name }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="card-body">
+                                <label for="cardSerial">
+                                    Quantity
+                                </label>
+                                <input id="cardSerial" class="form-control" type="text" placeholder="{{ order.quantity }}" readonly>
+                                <br>
+                                <label for="orderAmount">
+                                    Price
+                                </label>
+                                <div class="input-group">
+                                        <input id="orderAmount" type="text" class="form-control" placeholder="{{ order.product.price }}" readonly>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">MRU / One</span>
+                                    </div>
+                                </div>
+                                <br>
+                                <label for="orderAmount">
+                                    Category
+                                </label>
+                                <input id="cardSerial" class="form-control" type="text" placeholder="{{ order.product.category }}" readonly>
+                                <br>
+                                <a href="{% url 'product' order.product.id %}" type="button" class="btn btn-outline-primary btn-lg btn-block">Show More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        {% for card in order.giftcard_set.all %}
+                        <a href="{% url 'giftcard' card.id %}" type="button" class="btn btn-primary btn-lg btn-block">Show {{ card.product.name }} #{{ card.id }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

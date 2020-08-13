@@ -1,0 +1,27 @@
+{% extends "main_app/base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div id="layoutError">
+    <div id="layoutError_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="text-center mt-4">
+                            <h1 class="display-1">Congrats</h1>
+                            <p class="lead" style="margin-bottom: 0;">Your registration request have been sent successfully</p>
+                            <p class="description" style="color: #212529">Please kindly wait for us to accept your registration request.</p>
+                            <a href="{% url 'home' %}">
+                                <i class="icofont-arrow-left"></i>
+                                Return Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

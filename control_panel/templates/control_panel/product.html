@@ -1,0 +1,46 @@
+{% extends 'control_panel/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 class="title-1 m-b-5">{{ product.name}}</h2>
+                    <h3 class="title-3 m-b-5"><b>{{ product.category}}</b></h3>
+                    <h3 class="title-3 m-b-30"><b>Price:</b> {{ product.price}} MRU</h3>
+                    <h3 class="title-3 m-b-15">Last Orders</h3>
+                    <div class="table-responsive table--no-card m-b-40">
+                        <table class="table table-borderless table-striped table-earning">
+                            <thead>
+                                <tr>
+                                    <th>date</th>
+                                    <th>customer</th>
+                                    <th>product</th>
+                                    <th class="text-right">price</th>
+                                    <th class="text-right">quantity</th>
+                                    <th class="text-right">status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.date_created }}</td>
+                                    <td>{{ order.customer.name }}</td>
+                                    <td>{{ order.product.name }}</td>
+                                    <td class="text-right">{{ order.product.price }} MRU</td>
+                                    <td class="text-right">{{ order.quantity }}</td>
+                                    <td class="text-right {% if order.status == 'Delivered' %}} alert-success {% else %} alert-danger {% endif %}">{{ order.status }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

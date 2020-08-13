@@ -1,0 +1,106 @@
+{% extends 'control_panel/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    @media (max-width: 991px){
+        .needMarginOnMobile{
+            margin-top: 16px;
+        }
+    }
+</style>
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="card">
+            <div class="card-header">
+                <h2 style="color: #444;" class="card-title">{{ card.product.name }} &nbsp; <button onclick="copyCard()"><i style="color: #444;" class="fas fa-copy"></i></button></h2>
+                <p class="card-subtitle">GiftCard #{{ card.id }}
+                    {% if card.used %}
+                        <button type="button" class="btn btn-danger m-l-10">Used</button>
+                    {% else %}
+                        <button type="button" class="btn btn-info m-l-10">Fresh</button>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="title-3 mb-2">
+                            Gift Card
+                        </h3>
+                        <label for="cardProductName">
+                            Price
+                        </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="{{ card.product.price }}" readonly>
+                            <div class="input-group-append">
+                                <span class="input-group-text">MRU</span>
+                            </div>
+                        </div>
+                        <br>
+                        <label for="cardSerial">
+                            Card Serial
+                        </label>
+                        <input id="cardSerial" class="form-control" type="text" placeholder="{{ card.serial }}" readonly>
+                        <br>
+                        <label for="cardCode">
+                            Card Code
+                        </label>
+                        <input id="cardCode" class="form-control" type="text" placeholder="{{ card.code }}" readonly>
+                        <textarea id="toCopy" style="display: none;" readonly>Serial Code: {{ card.serial }}
+Gift Code: {{ card.code }}</textarea>
+                    </div>
+
+                    {# ORDER #}
+                    {% if card.order %}
+                    <div class="col-md-6 needMarginOnMobile">
+                        <h3 class="title-3 mb-2">
+                            Order #{{ card.order.id }}
+                        </h3>
+                        <label for="cardProductName">
+                            Customer
+                        </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="{{ card.order.customer.name }}" readonly>
+                            <div class="input-group-append">
+                                <span class="input-group-text">{{ card.order.customer.phone }}</span>
+                            </div>
+                        </div>
+                        <br>
+                        <label for="cardOrderDate">
+                            Order Date
+                        </label>
+                        <input id="cardOrderDate" class="form-control" type="text" placeholder="{{ card.order.date_created }}" readonly>
+                        <br>
+                        <label for="cardPaymentMethod">
+                            Payment Method
+                        </label>
+                        <input id="cardPaymentMethod" class="form-control" type="text" placeholder="{{ card.order.transaction.credentials.method.name }}" readonly>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copyCard() {
+    var copyText = document.getElementById("toCopy");
+
+    const el = document.createElement('textarea');
+    el.value = copyText.value;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    el.setSelectionRange(0, 99999);
+
+    document.execCommand('copy');
+}
+</script>
+
+{% endblock %}
