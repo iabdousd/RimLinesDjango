@@ -36,10 +36,10 @@ class OrderForm(forms.Form):
 
     customer_number = forms.CharField(label='Customer Number', max_length=100)
     customer_name = forms.CharField(label='Customer Name', max_length=100)
+    customer_id = forms.CharField(label='Customer ID', max_length=100)
     from_destination = forms.CharField(label='Money Coming From', max_length=100)
     quantity = forms.IntegerField(label='Quantity')
     product = forms.ModelChoiceField(Product.objects, label='Product')
     method = forms.ModelChoiceField(PaymentMethod.objects, label='Payment Method')
-    status = forms.ChoiceField(label='Order Status', choices=STATUS)
     verified = forms.BooleanField(label='Payment Done')
 

@@ -95,13 +95,14 @@ class Order(models.Model):
     quantity = models.IntegerField(null=False)
     status = models.CharField(max_length=200, null=True, default='Delivered', choices=STATUS)
     transaction = models.OneToOneField(Transaction, null=True, on_delete=models.SET_NULL)
+    c_id = models.CharField(max_length=10, null=True)
 
     def __str__(self):
         return self.product.name + ' #' + self.id.__str__()
 
     @classmethod
-    def create(cls, customer, product, date_created, quantity, status, transaction):
-        order = cls(customer=customer, product=product, date_created=date_created, quantity=quantity, status=status, transaction=transaction)
+    def create(cls, customer, product, date_created, quantity, status, transaction, customer_id):
+        order = cls(customer=customer, product=product, date_created=date_created, quantity=quantity, status=status, transaction=transaction, c_id=customer_id)
         return order
 
 

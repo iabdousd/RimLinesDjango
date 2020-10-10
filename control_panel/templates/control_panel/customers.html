@@ -2,12 +2,17 @@
 {% load static %}
 
 {% block content %}
-<div class="main-content">
+<div class="main-content animsition">
     <div class="section__content section__content--p30">
-        <div class="container-fluid">
+        <div class="au-card">
+            <div class="au-card-title">
+                <h3 class="title-1" style="color: #222;">
+                    Customers
+                </h3>
+            </div>
+            <br>
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="title-1 m-b-15">Customers:</h2>
                     <div class="table-responsive table--no-card m-b-40">
                         <table class="table table-borderless table-striped table-earning">
                             <thead>
@@ -22,7 +27,7 @@
                             <tbody>
                                 {% for customer in customers %}
                                 <tr onclick="window.location='{% url 'customer' customer.id %}';">
-                                    <td>{{ customer.date_created }}</td>
+                                    <td>{{ customer.date_created | date:"d/m/Y" }}</td>
                                     <td>{{ customer.name }}</td>
                                     <td>{{ customer.email }}</td>
                                     <td class="text-right">{{ customer.phone }}</td>

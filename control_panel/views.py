@@ -230,6 +230,15 @@ def add_gift_cards(request):
         if form.is_valid():
             giftCard = form.save()
             giftCard.date_created = timezone.now()
+            orders_ = Order.objects.filter(status='Pending', product=giftCard.product)
+            for order_ in orders_:
+                giftCard.order = order_
+                giftCard.used = True
+                order_.save()
+                if order_.quantity == order_.giftcard_set.count():
+                    order_.status = 'Delivered'
+                    order_.save()
+
             giftCard.save()
             return redirect('giftcards')
 
@@ -249,25 +258,46 @@ def add_order(request):
             from_destination = form.cleaned_data['from_destination']
             quantity = form.cleaned_data['quantity']
             product = form.cleaned_data['product']
+
+            customer_id = ''
+            if 'PUBG' in product.name:
+                customer_id = form.cleaned_data['customer_id']
+
             method = form.cleaned_data['method']
-            status = form.cleaned_data['status']
+            # status = form.cleaned_data['status']
             verified = form.cleaned_data['verified']
             customer_ = Customer.create(customer_name, customer_number, '', timezone.now())
             if Customer.objects.filter(phone=customer_number).count() == 0:
                 customer_ = customer_.save()
+
             else:
                 customer_ = Customer.objects.get(phone=customer_number)
+                if customer_name and customer_name != '':
+                    customer_.name = customer_name
+                    customer_.save()
+
             total_price = product.price * quantity
             transaction_cred_ = TransactionCredentials.create(method, timezone.now(), customer_number, from_destination, total_price)
             transaction_cred_.save()
             transaction_ = Transaction.create(transaction_cred_, timezone.now(), verified)
             transaction_.save()
-            order_ = Order.create(customer_, product, timezone.now(), quantity, status, transaction_)
+            order_ = Order.create(customer=customer_, product=product, date_created=timezone.now(), quantity=quantity, status='Delivered' if verified else 'Out for delivery', transaction=transaction_, customer_id=customer_id)
             order_.save()
-            unused_gift_card = GiftCard.objects.filter(product=product, used=False).all()[0]
+            unused_gift_cards = GiftCard.objects.filter(product=product, used=False).all()
+            if not unused_gift_cards:
+                order_.status = 'Pending'
+                order_.save()
+                return redirect('order', order_.id)
+            unused_gift_card = unused_gift_cards[0]
             unused_gift_card.order = Order.objects.get(id=order_.id)
             unused_gift_card.used = True
             unused_gift_card.save()
+            if verified:
+                order_.status = 'Delivered'
+            else:
+                order_.status = 'Out for delivery'
+            order_.save()
+
             return redirect('order', order_.id)
 
     context = {"form": form}

@@ -18,7 +18,7 @@
                         <button type="button" class="btn btn-warning m-l-10 m-b-10">{{ order.status }}</button>
                     {% endif %}
                 </div>
-                <p class="card-subtitle">{{ order.date_created }}</p>
+                <p class="card-subtitle">{{ order.date_created | date:"d/m/Y - H:m" }}</p>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -34,7 +34,7 @@
                                     {% endif %}
                                 </h3>
                                 <p class="card-subtitle">
-                                    {{ order.transaction.date_created }}
+                                    {{ order.transaction.date_created | date:"d/m/Y - H:m" }}
                                 </p>
                             </div>
                             <div class="card-body">
@@ -108,7 +108,7 @@
                     </div>
                     <div class="col-md-12">
                         {% for card in order.giftcard_set.all %}
-                        <a href="{% url 'giftcard' card.id %}" type="button" class="btn btn-primary btn-lg btn-block">Show {{ card.product.name }} #{{ card.id }}</a>
+                        <a href="{% url 'giftcard' card.id %}" type="button" class="btn btn-primary btn-lg btn-block">{{ card.product.name }} | #{{ card.id }}</a>
                         {% endfor %}
                     </div>
                 </div>

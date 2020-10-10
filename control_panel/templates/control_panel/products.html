@@ -10,12 +10,13 @@
         padding: 10px 8px;
         margin-bottom: 16px;
         transition-duration: 0.5s;
+        width: 100%;
     }
     select{
         display: inline-block;
         border-radius: 4px;
         background-color: #f1f1f1;
-        {#width: 100%;#}
+        width: 100%;
         padding: 10px 8px;
         margin-bottom: 16px;
     }
@@ -27,8 +28,9 @@
         list-style: none;
         font-weight: 500;
     }
+
     label[for='id_category']{
-        padding-right: 12px;
+        display: block;
     }
     label[for='id_search_name']{
         display: block;
@@ -36,36 +38,63 @@
     label[for='id_start_price']{
         display: block;
     }
-    #id_search_name{
+    label[for='id_end_price']{
+        display: block;
+    }
+    .filters-column{
+        display: grid;
+        grid-gap: 12px;
+        grid-template-columns: auto auto auto;
+    }
+    .filters-column p{
         width: 100%;
+    }
+    .filters-column p:nth-child(4){
+        grid-column: 1/4;
+    }
+
+    #id_search_name{
+        min-width: 320px;
+        {#width: 100%;#}
     }
     .au-btn--submit{
         width: 15%;
         color: white;
+        margin-right: 12px;
+        margin-left: auto;
         display: inline-block;
         float: right;
         height: 46px;
+        border-radius: 4px;
     }
-    #id_category{
-        width: 405px;
+
+    @media (max-width: 600px) {
+        .filters-column p{
+            grid-column: 1/4;
+        }
     }
 </style>
 <div class="main-content animsition">
-    <div class="section__content section__content--p30 row">
-        <div class="col-md-12 au-card au-card--no-shadow m-b-40">
+    <div class="section__content section__content--p30">
+        <div class="au-card">
+            <div class="au-card-title">
+                <h3 class="title-1" style="color: #222;">
+                    Products
+                </h3>
+            </div>
+            <br>
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="title-1 m-b-15">Products:</h2>
-                        <div class="table-data__tool">
-                            <form method="get" style="width: 100%">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        {{ filter.form }}
-                                        <button class="au-btn--submit" type="submit">
-                                            Apply Filter
-                                        </button>
-                                    </div>
+                    <div class="table-data__tool">
+                        <form method="get" style="width: 100%">
+                            <div class="row">
+                                <div class="col-md-12 filters-column">
+                                    {{ filter.form.as_p }}
                                 </div>
+                                <button class="au-btn--submit" type="submit">
+                                    Apply Filter
+                                </button>
+                            </div>
 {#                                <div class="rs-select2--light rs-select2--md">#}
 {#                                    <select class="js-select2" name="property">#}
 {#                                        <option selected="selected">All Properties</option>#}
@@ -85,13 +114,13 @@
 {#                                <button class="au-btn-filter">#}
 {#                                    <i class="zmdi zmdi-filter-list"></i>filters#}
 {#                                </button>#}
-                            </form>
-                        </div>
+                        </form>
+                    </div>
                     <div class="table-responsive table--no-card m-b-40">
                         <table class="table table-borderless table-striped table-earning">
                             <thead>
                                 <tr>
-                                    <th>date</th>
+                {#                                    <th>date</th>#}
                                     <th>name</th>
                                     <th>category</th>
                                     <th class="text-right">description</th>
@@ -101,11 +130,11 @@
                             <tbody>
                                 {% for product in products %}
                                 <tr onclick="window.location='{% url 'product' product.id %}';">
-                                    <td>{{ product.date_created }}</td>
+                {#                                    <td>{{ product.date_created }}</td>#}
                                     <td>{{ product.name }}</td>
                                     <td>{{ product.category }}</td>
                                     <td class="text-right">{{ product.description }}</td>
-                                    <td class="text-right">{{ product.price }}</td>
+                                    <td class="text-right">{{ product.price }} MRU</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -117,8 +146,8 @@
     </div>
 </div>
 <script>
-    label_price = document.querySelector("label[for='id_start_price']").innerHTML = 'Price Between:';
-    label_price = document.querySelector("label[for='id_end_price']").innerHTML = '&nbsp;&nbsp; and &nbsp;&nbsp;';
-    label_price = document.querySelector("label[for='id_search_name']").innerHTML = 'Search by name:';
+    label_price = document.querySelector("label[for='id_start_price']").innerHTML = 'Price Greater Than:';
+    label_price = document.querySelector("label[for='id_end_price']").innerHTML = 'Price Lower Than:';
+    label_price = document.querySelector("label[for='id_search_name']").innerHTML = 'Search:';
 </script>
 {% endblock %}

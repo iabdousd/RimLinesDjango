@@ -1,6 +1,7 @@
 import django_filters
-from django_filters import NumberFilter, CharFilter
+from django_filters import NumberFilter, CharFilter, ChoiceFilter
 from .models import *
+from django import forms
 
 
 class ProductFilter(django_filters.FilterSet):
